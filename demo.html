@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>KO observable set demo</title>
+
+	<script src="http://knockoutjs.com/downloads/knockout-3.3.0.js"></script>
+	<script src="ko.observableSet.js"></script>
+</head>
+<body>
+	<p>
+		Value to Add: <input data-bind="value: keyToAdd" /> <button data-bind="click: addItem">Add</button>
+	</p>
+	<p>
+    	Value to Remove: <input data-bind="value: keyToRemove" /> <button data-bind="click: removeItem">Remove</button>
+	</p>
+	<p>
+		Value to check for presence: <input data-bind="value: keyToCheck, style: {color: set.has(keyToCheck) ? 'green' : 'pink'}" />
+	</p>
+
+    <ul data-bind="foreach: set">
+    	<li data-bind="text: $data"></li>
+    </ul>
+
+<script>
+var data = [
+    234,
+    321,
+    "abc",
+    345,
+    null,
+    "this is a test",
+    234 // A duplicate
+];
+var viewModel = {
+    set: new ko.observableSet(data),
+    
+    keyToAdd: new ko.observable(),
+    keyToRemove: new ko.observable(),
+    keyToCheck: new ko.observable(),
+
+    addItem: function() {
+        this.set.add(this.keyToAdd());
+    },
+
+    removeItem: function() {
+        this.set.delete(this.keyToRemove());
+    }
+};
+ko.applyBindings(viewModel);
+</script>
+</body>
+</html>
