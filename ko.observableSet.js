@@ -16,7 +16,7 @@
 		}
 
 		var result = ko.observable(initialValues);
-		ko.utils.setPrototypeOfOrExtend(result, ko.observableSet['fn']);
+		ko.utils.extend(result, ko.observableSet['fn']);
 		return result;
 	};
 
