@@ -18,7 +18,7 @@
 		Value to check for presence: <input data-bind="value: keyToCheck, style: {color: set.has(keyToCheck) ? 'green' : 'pink'}" />
 	</p>
 
-    <ul data-bind="foreach: set">
+    <ul data-bind="foreach: set.asObservableArray()">
     	<li data-bind="text: $data"></li>
     </ul>
 
