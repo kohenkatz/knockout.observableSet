@@ -4,7 +4,7 @@
 
 (function () {
 	'use strict';
-	
+
 	ko.observableSet = function (initialValues) {
 		if (typeof initialValues != 'object' || !('length' in initialValues))
 			throw new Error("The argument passed when initializing an observable array must be an array, or null, or undefined.");
@@ -15,6 +15,10 @@
 			initialValues = new Set();
 		}
 
+		// Temporary Hack:
+		// Because knockout checks for a `length` property on `foreach`
+		Object.defineProperty(initialValues, "length", { get: function() { return this.size; } });
+
 		var result = ko.observable(initialValues);
 		ko.utils.extend(result, ko.observableSet['fn']);
 		return result;
@@ -22,15 +26,15 @@
 
 	ko.observableSet['fn'] = {
 		delete: function (valueOrPredicate) {
-			let underlyingSet = this.peek();
-			let found = false;
-			let to_remove = null;
+			var underlyingSet = this.peek();
+			var found = false;
+			var to_remove = null;
 
 			// If it is a predicate, we need to do this the long way
-			let is_predicate = (typeof valueOrPredicate == "function" && !ko.isObservable(valueOrPredicate));
+			var is_predicate = (typeof valueOrPredicate == "function" && !ko.isObservable(valueOrPredicate));
 
 			if (is_predicate) {
-				for (let value of underlyingSet) {
+				for (var value of underlyingSet) {
 					if (underlyingSet.has(predicate(value))) {
 						found = true;
 						to_remove = value;
@@ -41,7 +45,7 @@
 					underlyingSet.delete(to_remove);
 				}
 			} else {
-				let to_remove = valueOrPredicate;
+				to_remove = valueOrPredicate;
 				found = underlyingSet.delete(to_remove);
 			}
 
@@ -54,8 +58,8 @@
 		deleteAll: function (arrayOfValues) {
 			// If you passed zero args, we remove everything
 			if (arrayOfValues === undefined) {
-				let underlyingSet = this.peek();
-				let allValues = this.keys();
+				var underlyingSet = this.peek();
+				var allValues = this.keys();
 				this.valueWillMutate();
 				underlyingSet.clear();
 				this.valueHasMutated();
