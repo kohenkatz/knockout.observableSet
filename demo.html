@@ -12,7 +12,7 @@
 		Value to Add/Remove: <input data-bind="value: itemToAddRemove" /> <button data-bind="click: addItem">Add</button> <button data-bind="click: removeItem">Remove</button>
 	</p>
 	<p>
-		Value to check for presence: <input data-bind="value: keyToCheck, style: {color: hasKey ? 'green' : 'pink'}" />
+		Value to check for presence: <input data-bind="value: itemToCheck, style: {color: hasItem ? 'green' : 'red'}" />
 	</p>
 
     <ul data-bind="foreach: set.asObservableArray()">
