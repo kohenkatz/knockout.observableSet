@@ -36,10 +36,11 @@ mySet.has(5);    // false, 5 has been removed
 mySet().size; // 3, we just removed one value
 ```
 
-Databinding works just like an `observableArray`:
+Because Knockout does things that assume the data in a `foreach` is an actual array or an `observableArray`,
+`observableSet` includes a method that returns a `computed` `observableArray` to be used in the `foreach`:
 
 ```
-<ul data-bind="foreach: mySet">
+<ul data-bind="foreach: mySet.asObservableArray()">
     <li data-bind="text: $data"></li>
 </ul>
 ```
