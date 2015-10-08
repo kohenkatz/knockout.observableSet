@@ -15,10 +15,6 @@
 			initialValues = new Set();
 		}
 
-		// Temporary Hack:
-		// Because knockout checks for a `length` property on `foreach`
-		Object.defineProperty(initialValues, "length", { get: function() { return this.size; } });
-
 		var result = ko.observable(initialValues);
 		ko.utils.extend(result, ko.observableSet['fn']);
 		return result;
@@ -91,6 +87,14 @@
 		toArray: function() {
 			var underlyingSet = this.peek();
 			return [...underlyingSet];
-		}
+		},
+		
+		// Because Knockout's `foreach` binding explicitly only works with
+		// arrays, we need to pretend that we are an array
+		asObservableArray: function() {
+			return ko.computed(function() {
+				return [...this.call()];
+			}, this)
+		},
 	}
 })();
