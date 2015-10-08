@@ -29,23 +29,27 @@ var data = [
     "this is a test",
     234 // A duplicate
 ];
+
+var set = new ko.observableSet(data);
+var itemToAddRemove = new ko.observable();
+var itemToCheck = new ko.observable();
+
 var viewModel = {
-    set: new ko.observableSet(data),
-    
-    itemToAddRemove: new ko.observable(),
-    itemToCheck: new ko.observable(),
+    set: set,
+    itemToAddRemove: itemToAddRemove,
+    itemToCheck: itemToCheck,
 
     addItem: function() {
-        this.set.add(this.itemToAddRemove());
+        this.set.add(itemToAddRemove());
     },
 
     removeItem: function() {
-        this.set.delete(this.itemToAddRemove());
+        this.set.delete(itemToAddRemove());
     },
     
     hasItem: ko.computed(function() {
-    	return this.set.has(this.itemToCheck());
-    }, this),
+    	return set.has(itemToCheck());
+    }),
 };
 ko.applyBindings(viewModel);
 </script>
