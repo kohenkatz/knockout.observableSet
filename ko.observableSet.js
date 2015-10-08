@@ -78,7 +78,7 @@
 			var underlyingSet = this.peek();
 			if (!underlyingSet.has(value)) {
 				this.valueWillMutate();
-				underlyingArray.add(value);
+				underlyingSet.add(value);
 				this.valueHasMutated();
 			}
 			return this;
