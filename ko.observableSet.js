@@ -3,6 +3,8 @@
 // License: MIT (http://www.opensource.org/licenses/mit-license.php)
 
 (function () {
+	'use strict';
+	
 	ko.observableSet = function (initialValues) {
 		if (typeof initialValues != 'object' || !('length' in initialValues))
 			throw new Error("The argument passed when initializing an observable array must be an array, or null, or undefined.");
