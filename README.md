@@ -35,3 +35,11 @@ mySet.has(5);    // false, 5 has been removed
 
 mySet().size; // 3, we just removed one value
 ```
+
+Databinding works just like an `observableArray`:
+
+```
+<ul data-bind="foreach: mySet">
+    <li data-bind="text: $data"></li>
+</ul>
+```
