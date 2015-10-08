@@ -9,13 +9,10 @@
 </head>
 <body>
 	<p>
-		Value to Add: <input data-bind="value: keyToAdd" /> <button data-bind="click: addItem">Add</button>
+		Value to Add/Remove: <input data-bind="value: itemToAddRemove" /> <button data-bind="click: addItem">Add</button> <button data-bind="click: removeItem">Remove</button>
 	</p>
 	<p>
-    	Value to Remove: <input data-bind="value: keyToRemove" /> <button data-bind="click: removeItem">Remove</button>
-	</p>
-	<p>
-		Value to check for presence: <input data-bind="value: keyToCheck, style: {color: set.has(keyToCheck) ? 'green' : 'pink'}" />
+		Value to check for presence: <input data-bind="value: keyToCheck, style: {color: hasKey ? 'green' : 'pink'}" />
 	</p>
 
     <ul data-bind="foreach: set.asObservableArray()">
@@ -35,17 +32,20 @@ var data = [
 var viewModel = {
     set: new ko.observableSet(data),
     
-    keyToAdd: new ko.observable(),
-    keyToRemove: new ko.observable(),
-    keyToCheck: new ko.observable(),
+    itemToAddRemove: new ko.observable(),
+    itemToCheck: new ko.observable(),
 
     addItem: function() {
-        this.set.add(this.keyToAdd());
+        this.set.add(this.itemToAddRemove());
     },
 
     removeItem: function() {
-        this.set.delete(this.keyToRemove());
-    }
+        this.set.delete(this.itemToAddRemove());
+    },
+    
+    hasItem: ko.computed(function() {
+    	return this.set.has(this.itemToCheck());
+    }, this);
 };
 ko.applyBindings(viewModel);
 </script>
