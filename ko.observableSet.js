@@ -31,7 +31,7 @@
 
 			if (is_predicate) {
 				for (var value of underlyingSet) {
-					if (underlyingSet.has(predicate(value))) {
+					if (underlyingSet.has(valueOrPredicate(value))) {
 						found = true;
 						to_remove = value;
 						break;
